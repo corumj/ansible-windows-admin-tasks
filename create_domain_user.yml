@@ -1,0 +1,37 @@
+---
+- name: Create a new domain user
+  hosts: windows
+  vars:
+    name: bob
+    firstname: Bob
+    surname: Smith
+    password: B0bP4ssw0rd
+    groups:
+      - Domain Admins 
+    telephoneNumber: 555-123456
+  tasks:
+    - name: Create a new user
+      win_domain_user:
+        name: "{{ name }}"
+        firstname: "{{ firstname }}"
+        surname: "{{ surname }}"
+        company: BobCo
+        password: "{{ password }}"
+        state: present
+        groups: "{{ groups }}"
+        street: 123 4th St.
+        city: Sometown
+        state_province: IN
+        postal_code: 12345
+        country: US
+        attributes:
+          telephoneNumber: "{{ telephoneNumber }}"
+
+    - name: Ensure user bob is present in OU ou=test,dc=domain,dc=local
+      win_domain_user:
+        name: bob
+        password: B0bP4ssw0rd
+        state: present
+        path: ou=test,dc=domain,dc=local
+        groups:
+          - Domain Admins
