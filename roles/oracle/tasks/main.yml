@@ -1,0 +1,6 @@
+---
+# setup TNS_ADMIN Windows environment variable
+# \\ci.chandler.az.us\nf04\AP1\TNSNames\tnsnames.ora
+# copy Oracle 32-bit and 64-bit RSP (response) files
+# run setup file for 32-bit
+# run setup file for 64-bit

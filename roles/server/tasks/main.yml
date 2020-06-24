@@ -1,0 +1,71 @@
+---
+# Role to install ArcGIS Server
+# Created: August 2019, Jerry Corum
+# Modified: 
+#   <Name> - <date>, <summary of changes>
+
+- name: Create TNS_ADMIN Windows environment variable
+  become: yes
+  win_environment:
+    state: present
+    name: TNS_ADMIN
+    value: \\ci.chandler.az.us\nf04\AP1\TNSNames
+    level: machine
+
+- name: Copy the extracted Oracle client software setup files
+  become: yes
+  win_command: powershell.exe
+  args:
+    stdin: "Copy-Item -Path {{ oracle_source_setup_files }} -Destination {{ oracle_destination_setup_files }} -Recurse"
+    creates: "{{ oracle_destination_setup_files }}"
+
+- name: Install Oracle client software
+  become: yes
+  win_command: "{{ oracle_destination_setup_files }}\\client\\setup.exe -silent -nowait -waitforcompletion -responseFile {{ oracle_destination_setup_files }}\\client_64.rsp"
+  args:
+    creates: C:\oracle64
+
+- name: Copy the extracted Esri setup files
+  become: yes
+  win_command: powershell.exe
+  args:
+    stdin: "Copy-Item -Path {{ esri_source_setup_files }} -Destination {{ esri_destination_setup_files }} -Recurse"
+    creates: "{{ esri_destination_setup_files }}"
+
+- name: Install ArcGIS Server from the extracted Esri setup files
+  win_package:
+    become: yes
+    arguments: /qb INSTALLDIR={{ esri_INSTALLDIR }} INSTALLDIR1=D:\Python27 USER_NAME=cocad\ArcGISServerAccount PASSWORD={{ ArcGISServerAccount_password }}
+    # path: \\vdp5wf01\dept\IT1\GIS\Support\GIS Software\ArcGIS\ESRI 10.7.1\ArcGIS_Server_Windows_1071_169677.exe
+    path: "{{ esri_destination_setup_files }}\\Setup.exe"
+    product_id: "ArcGIS Server 10.7.1"
+    
+- name: Authorize ArcGIS Server
+  win_command: powershell.exe
+  args:
+    stdin: "C:\\Program files\\Common files\\ArcGIS\\bin\\SoftwareAuthorization.exe /S /Ver 10.6 /LIF {{ esri_destination_setup_files }}\\authorizationfile.prvc"
+
+- name: Create temp folder for ArcGIS Server createsite.properties file
+  win_file:
+    path: "{{ createsite_dir }}"
+    state: directory
+
+- name: Create ArcGIS Server createsite.properties file from a Jinja2 template
+  win_template:
+    src: createsite.properties.j2
+    dest: "{{ createsite_dest }}"
+
+- name: Use the createsite command line utility to create an ArcGIS Server site
+  win_shell: "{{ createsite_script_dir }}\\{{ createsite_script }} -f {{ createsite_dest }}"
+  args:
+    creates: "{{ arcgisserver_directory }}"
+
+- name: Remove createsite file
+  win_file:
+    path: "{{ createsite_dest }}"
+    state: absent
+
+- name: Remove local copy of ArcGIS Server install files
+  win_file:
+    path: "{{ esri_destination_setup_files }}"
+    state: absent

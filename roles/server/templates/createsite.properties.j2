@@ -1,0 +1,14 @@
+#
+# Configuration properties for Server site creation
+#
+# User name for primary site administrator.
+# Cannot contain these characters: \/:*?<>"
+SERVER_ADMIN_USERNAME = siteadmin
+# Password for primary site administrator.
+# Cannot contain these characters: \/:*?<>"
+SERVER_ADMIN_PASSWORD = {{ siteadmin_password }}
+SERVER_ADMIN_PASSWORD_ENCRYPTED = false
+# Root server directory. By default, the server directories will be created locally, 
+SERVER_DIRECTORIES_PATH = {{ arcgisserver_directory }}
+# Configuration store for the ArcGIS Server site. By default, the configuration store will be created locally, 
+SERVER_CONFIGSTORE_PATH = {{ arcgisserver_configstore }}
