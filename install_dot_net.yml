@@ -1,0 +1,12 @@
+---
+- name: Show enabling windows features and services
+  hosts: windows
+  tasks:
+    - name: Install .NET 3.5
+      win_feature:
+        name: NetFx3
+        state: present
+      register: win_feature
+
+    - debug:
+        var: win_feature
