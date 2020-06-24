@@ -4,7 +4,7 @@
   tasks:
     - name: Install .NET 3.5
       win_feature:
-        name: NetFx3
+        name: NET-Framework-Features
         state: present
       register: win_feature
 
