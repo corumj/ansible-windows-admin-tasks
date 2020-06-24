@@ -1,0 +1,9 @@
+- name: Manage IIS Service
+  hosts: windows
+  vars:
+    desired_state: started # default value to be overwritten with Tower survey
+  tasks:
+    - name: Stop IIS Service
+      win_service:
+        name: W3Svc
+        state: "{{ desired_state }}"

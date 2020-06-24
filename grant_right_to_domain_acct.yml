@@ -1,0 +1,10 @@
+---
+- name: Grant rights to a domain account
+  hosts: windows
+  tasks:
+    - name: Grant domain account the SeServiceLogonRight user right needed to run as a service
+      win_user_right:
+        name: SeServiceLogonRight
+        users:
+          - DOMAIN\User
+        action: add
