@@ -1,3 +1,4 @@
+---
 - name: Manage IIS Service
   hosts: windows
   vars:
