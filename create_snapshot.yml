@@ -1,0 +1,15 @@
+---
+- name: Create a VM Snapshot
+  hosts: localhost
+  tasks:
+    - name: Create a snapshot
+      vmware_guest_snapshot:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        datacenter: "{{ datacenter_name }}"
+        folder: "/{{ datacenter_name }}/vm/"
+        name: "{{ guest_name }}"
+        state: present
+        snapshot_name: snap1
+        description: snap1_description

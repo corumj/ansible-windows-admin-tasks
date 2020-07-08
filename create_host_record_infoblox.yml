@@ -1,0 +1,13 @@
+---
+- name: Create a host record
+  hosts: nios
+  connection: local
+  tasks:
+    - name: configure an IPv4 host record
+      nios_host_record:
+        name: leaf03.ansible.com
+        ipv4addrs:
+          - ipv4addr:
+              "{{ lookup('nios_next_ip', '192.168.100.0/24', provider=nios_provider)[0] }}"
+        state: present
+provider: "{{nios_provider}}"
