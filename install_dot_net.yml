@@ -1,6 +1,6 @@
 ---
 - name: Show enabling windows features and services
-  hosts: windows
+  hosts: all
   tasks:
     - name: Install .NET 3.5
       win_feature:
