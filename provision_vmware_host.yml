@@ -1,0 +1,8 @@
+- name: Provision a server in RHV
+  hosts: localhost
+  - name: Create vm from template named 'rhel7_template'
+    ovirt_vm:
+      state: present
+      name: mydemovm
+      template: rhel7_template
+      cluster: mydemocluster
