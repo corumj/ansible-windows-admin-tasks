@@ -1,0 +1,30 @@
+{
+  "description": "",
+  "spec": [
+    {
+      "required": true,
+      "min": null,
+      "default": "CriticalUpdates\nSecurityUpdates",
+      "max": null,
+      "question_description": "Which Categories to install?",
+      "choices": "Application\nConnectors\nCriticalUpdates\nDefinitionUpdates\nDeveloperKits\nFeaturePacks Guidance\nSecurityUpdates\nServicePacks\nTools\nUpdateRollups\nUpdates",
+      "new_question": true,
+      "variable": "categories",
+      "question_name": "Categories",
+      "type": "multiselect"
+    },
+    {
+      "required": true,
+      "min": null,
+      "default": "Yes",
+      "max": null,
+      "question_description": "If the server needs to reboot, then do so after install",
+      "choices": "Yes\nNo",
+      "new_question": true,
+      "variable": "reboot_server",
+      "question_name": "Reboot after install?",
+      "type": "multiplechoice"
+    }
+  ],
+  "name": ""
+}
