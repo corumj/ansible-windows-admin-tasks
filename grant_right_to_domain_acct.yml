@@ -1,6 +1,6 @@
 ---
 - name: Grant rights to a domain account
-  hosts: windows
+  hosts: all
   tasks:
     - name: Grant domain account the SeServiceLogonRight user right needed to run as a service
       win_user_right:

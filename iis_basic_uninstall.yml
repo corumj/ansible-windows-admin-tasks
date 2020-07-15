@@ -1,6 +1,6 @@
 ---
 - name: Remove the iis web service
-  hosts: windows
+  hosts: all
   tasks:
     - name: Stop iis service
       win_service:

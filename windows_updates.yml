@@ -1,6 +1,6 @@
 ---
 - name: This is my Windows patching playbook
-  hosts: windows
+  hosts: all
   tasks:
     - name: Install Windows Updates
       win_updates:

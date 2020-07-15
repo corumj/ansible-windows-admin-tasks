@@ -1,6 +1,6 @@
 ---
 - name: Manage IIS Service
-  hosts: windows
+  hosts: all
   vars:
     desired_state: started # default value to be overwritten with Tower survey
   tasks:

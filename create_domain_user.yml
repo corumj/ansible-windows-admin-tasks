@@ -1,6 +1,6 @@
 ---
 - name: Create a new domain user
-  hosts: windows
+  hosts: localhost
   vars:
     name: bob
     firstname: Bob

@@ -1,6 +1,6 @@
 ---
 - name: Install and configure IIS
-  hosts: windows
+  hosts: all
   vars:
     iis_sites:
       - name: 'Ansible Playbook Test'

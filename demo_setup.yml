@@ -1,0 +1,40 @@
+---
+- name: Setup demo env
+  hosts: localhost
+  tasks:
+    - name: Add tower project
+      tower_project:
+        name: "Windows Admin Tasks"
+        description: "Set of playbooks that showcase windows admin tasks"
+        organization: "Demo"
+        scm_type: git
+        scm_update_on_launch: yes
+        scm_url: https://github.com/corumj/ansible-windows-admin-tasks
+        state: present
+        tower_config_file: "~/.tower_cli.cfg"
+        validate_certs: no
+
+    - name: Create server provisioning job template
+      tower_job_template:
+        name: "Provision Server"
+        job_type: "check"
+        inventory: "Physical Inventory"
+        project: "Windows Admin Tasks"
+        playbook: "provision_vmware_host.yml"
+        credential: "SSH Server Credentials"
+        state: "present"
+        tower_config_file: "~/.tower_cli.cfg"
+
+    - name: Create Windows Update job template
+      tower_job_template:
+        name: "Windows Updates"
+        job_type: "run"
+        inventory: "Physical Inventory"
+        project: "Windows Admin Tasks"
+        playbook: "windows_updates.yml"
+        credential: "Windows Credentials"
+        limit: windows-servers
+        state: "present"
+        tower_config_file: "~/.tower_cli.cfg"
+        survey_enabled: yes
+        survey_spec: "{{ lookup('file', 'windows_update_survey.json') }}"
