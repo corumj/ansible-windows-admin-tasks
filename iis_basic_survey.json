@@ -1,0 +1,18 @@
+{
+  "description": "",
+  "spec": [
+    {
+      "required": true,
+      "min": 0,
+      "default": "Hello World!",
+      "max": 120,
+      "question_description": "Website test messge prompt",
+      "choices": "Application\nConnectors\nCriticalUpdates\nDefinitionUpdates\nDeveloperKits\nFeaturePacks Guidance\nSecurityUpdates\nServicePacks\nTools\nUpdateRollups\nUpdates",
+      "new_question": true,
+      "variable": "iis_test_message",
+      "question_name": "Please enter a test message for your new website",
+      "type": "text"
+    }
+  ],
+  "name": ""
+}

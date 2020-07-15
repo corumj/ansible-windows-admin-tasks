@@ -38,3 +38,40 @@
         tower_config_file: "~/.tower_cli.cfg"
         survey_enabled: yes
         survey_spec: "{{ lookup('file', 'windows_update_survey.json') }}"
+
+    - name: Create add to windows domain job template
+      tower_job_template:
+        name: "Add server to domain"
+        job_type: "check"
+        inventory: "Physical Inventory"
+        project: "Windows Admin Tasks"
+        playbook: "add_server_to_domain.yml"
+        credential: "Windows Credentials"
+        state: "present"
+        tower_config_file: "~/.tower_cli.cfg"
+
+    - name: Create IIS Basic Install template
+      tower_job_template:
+        name: "IIS Basic Install"
+        job_type: "check"
+        inventory: "Physical Inventory"
+        project: "Windows Admin Tasks"
+        playbook: "iis_basic.yml"
+        credential: "Windows Credentials"
+        state: "present"
+        tower_config_file: "~/.tower_cli.cfg"
+        survey_enabled: yes
+        survey_spec: "{{ lookup('file', 'iis_basic_survey.json') }}"
+
+    - name: Create Install .NET 3.5 template
+      tower_job_template:
+        name: "Install .NET 3.5"
+        job_type: "check"
+        inventory: "Physical Inventory"
+        project: "Windows Admin Tasks"
+        playbook: "install_dot_net.yml"
+        credential: "Windows Credentials"
+        state: "present"
+        tower_config_file: "~/.tower_cli.cfg"
+
+    
