@@ -2,11 +2,16 @@
 - name: Install openJDK with the MSI installer from Red Hat
   hosts: all
   gather_facts: yes
+  vars:
+    msi_name: java-11-openjdk-11.0.7.10-1.windows.redhat.x86_64.msi
+    dest_filename: '%TEMP%\{{ msi_name }}'
   tasks:
-    - name: Get current version of openJDK
-      win_command: java -version
-      register: java_version
-    
-    - name: Print the java version
-      debug:
-        var: java_version
+    - name: Download openJDK 
+      win_get_url:
+        url: https://developers.redhat.com/download-manager/file/{{ msi_name }}
+        dest: "{{ dest_filename }}"
+
+    - name: Install openJDK
+      win_package:
+        path: "{{ dest_filename }}"
+        state: present
