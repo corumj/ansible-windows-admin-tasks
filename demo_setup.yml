@@ -1,6 +1,8 @@
 ---
 - name: Setup demo env
   hosts: localhost
+  vars:
+    limit_host_group: windows-servers #used for LTO Field Test drive - adjust if using Windows workshop
   tasks:
     - name: Add tower project
       tower_project:
@@ -13,6 +15,10 @@
         state: present
         tower_config_file: "~/.tower_cli.cfg"
         validate_certs: no
+
+    - name: pause for a moment to let Tower clone the git repo
+      pause:
+        seconds: 20
 
     - name: Create server provisioning job template
       tower_job_template:
@@ -33,7 +39,7 @@
         project: "Windows Admin Tasks"
         playbook: "windows_updates.yml"
         credential: "Windows Credentials"
-        limit: windows-servers
+        limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
         survey_enabled: yes
@@ -47,7 +53,7 @@
         project: "Windows Admin Tasks"
         playbook: "add_server_to_domain.yml"
         credential: "Windows Credentials"
-        limit: windows-servers
+        limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
 
@@ -59,7 +65,7 @@
         project: "Windows Admin Tasks"
         playbook: "iis_basic.yml"
         credential: "Windows Credentials"
-        limit: windows-servers
+        limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
         survey_enabled: yes
@@ -73,8 +79,6 @@
         project: "Windows Admin Tasks"
         playbook: "install_dot_net.yml"
         credential: "Windows Credentials"
-        limit: windows-servers
+        limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
-
-    
