@@ -1,0 +1,10 @@
+---
+- name: Install openjdk with win_chocalatey
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Install openjdk
+      win_chocolatey:
+        name: openjdk
+        version: '14.0.1'
+        state: present
