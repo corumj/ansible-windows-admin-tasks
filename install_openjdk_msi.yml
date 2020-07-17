@@ -1,0 +1,8 @@
+---
+- name: Install openJDK with the MSI installer from Red Hat
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Print all the ansible facts to see if we can find java in it
+      debug:
+        var: ansible_facts
