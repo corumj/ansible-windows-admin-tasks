@@ -4,7 +4,7 @@
   gather_facts: yes
   vars:
     msi_name: java-11-openjdk-jre-11.0.7.10-1.windows.redhat.x86_64.msi
-    dest_filename: 'C:\\temp\{{ msi_name }}'
+    dest_filename: 'C:\temp\{{ msi_name }}'
   tasks:
     - name: Download openJDK 
       win_get_url:
