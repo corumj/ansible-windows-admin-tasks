@@ -3,6 +3,10 @@
   hosts: all
   gather_facts: yes
   tasks:
-    - name: Print all the ansible facts to see if we can find java in it
+    - name: Get current version of openJDK
+      win_command: java -version
+      register: java_version
+    
+    - name: Print the java version
       debug:
-        var: ansible_facts
+        var: java_version
