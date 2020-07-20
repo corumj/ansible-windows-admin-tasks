@@ -95,13 +95,13 @@
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
 
-    - name: Create Install OpenJDK w/ MSI template
+    - name: Create Install NodeJS w/ MSI template
       tower_job_template:
-        name: "Install OpenJDK w/ MSI"
+        name: "Install NodeJS w/ MSI"
         job_type: "run"
         inventory: "Physical Inventory"
         project: "Windows Admin Tasks"
-        playbook: "install_openjdk_msi.yml"
+        playbook: "install_nodejs_msi.yml"
         credential: "Windows Credentials"
         limit: "{{ limit_host_group }}"
         state: "present"
