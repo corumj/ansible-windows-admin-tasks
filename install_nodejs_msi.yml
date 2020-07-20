@@ -1,0 +1,24 @@
+---
+- name: Install NodeJS with the MSI installer
+  hosts: all
+  gather_facts: no
+  vars:
+    nodejs_version: "12.18.2"
+    nodejs_filename: node-v{{ nodejs_version }}-x64.msi
+
+  tasks:
+    - name: Create temporary download directory for NodeJS installer
+      win_tempfile:
+        state: directory
+        suffix: nodejs
+      register: temp_path
+
+    - name: Download NodeJS 
+      win_get_url:
+        url: https://nodejs.org/dist/v{{ nodejs_version }}/{{ nodejs_filename }}
+        dest: "{{ temp_path }}/{{ nodejs_filename }}"
+
+    - name: Install NodeJS
+      win_package:
+        path: "{{ temp_path }}/{{ nodejs_filename }}"
+        state: present

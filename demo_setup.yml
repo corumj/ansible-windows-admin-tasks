@@ -82,3 +82,27 @@
         limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
+
+    - name: Create Install OpenJDK w/ Chocolatey Template
+      tower_job_template:
+        name: "Install OpenJDK w/ Chocolatey"
+        job_type: "run"
+        inventory: "Physical Inventory"
+        project: "Windows Admin Tasks"
+        playbook: "install_openjdk.yml"
+        credential: "Windows Credentials"
+        limit: "{{ limit_host_group }}"
+        state: "present"
+        tower_config_file: "~/.tower_cli.cfg"
+
+    - name: Create Install OpenJDK w/ MSI template
+      tower_job_template:
+        name: "Install OpenJDK w/ MSI"
+        job_type: "run"
+        inventory: "Physical Inventory"
+        project: "Windows Admin Tasks"
+        playbook: "install_openjdk_msi.yml"
+        credential: "Windows Credentials"
+        limit: "{{ limit_host_group }}"
+        state: "present"
+        tower_config_file: "~/.tower_cli.cfg"
