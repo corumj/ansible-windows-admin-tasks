@@ -1,4 +1,4 @@
-- name: Provision a server in RHV
+- name: Provision a server in vmware
   hosts: localhost
   gather_facts: no
   tasks:
