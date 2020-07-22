@@ -2,13 +2,22 @@
 - name: Setup demo env
   hosts: localhost
   vars:
-    limit_host_group: windows-servers #used for LTO Field Test drive - adjust if using Windows workshop
+    # This section should be uncommented if using LTO Field Test Drive
+    credentials: "Windows Credentials" # Windows Credentials for LTO, Workshop Credential otherwise
+    inventory: "Physical Inventory" # Physical Inventory if LTO, Workshop Inventory otherwise
+    organization: Demo # Demo if LTO, Default if Workshop
+    limit_host_group: windows-servers # windows-servers if LTO, windows if workshop
+    # This section should be uncommented if using the Windows Workshop
+    # credentials: "Workshop Credential"
+    # inventory: "Workshop Inventory"
+    # organization: Default
+    # limit_host_group: windows
   tasks:
     - name: Add tower project
       tower_project:
         name: "Windows Admin Tasks"
         description: "Set of playbooks that showcase windows admin tasks"
-        organization: "Demo"
+        organization: "{{ organization }}"
         scm_type: git
         scm_update_on_launch: yes
         scm_url: https://github.com/corumj/ansible-windows-admin-tasks
@@ -20,25 +29,25 @@
       pause:
         seconds: 20
 
-    - name: Create server provisioning job template
-      tower_job_template:
-        name: "Provision Server"
-        job_type: "check"
-        inventory: "Physical Inventory"
-        project: "Windows Admin Tasks"
-        playbook: "provision_vmware_host.yml"
-        credential: "SSH Server Credentials"
-        state: "present"
-        tower_config_file: "~/.tower_cli.cfg"
+    # - name: Create server provisioning job template
+    #   tower_job_template:
+    #     name: "Provision Server"
+    #     job_type: "check"
+    #     inventory: "{{ inventory }}"
+    #     project: "Windows Admin Tasks"
+    #     playbook: "provision_vmware_host.yml"
+    #     credential: "SSH Server Credentials"
+    #     state: "present"
+    #     tower_config_file: "~/.tower_cli.cfg"
 
     - name: Create Windows Update job template
       tower_job_template:
         name: "Windows Updates"
         job_type: "run"
-        inventory: "Physical Inventory"
+        inventory: "{{ inventory }}"
         project: "Windows Admin Tasks"
         playbook: "windows_updates.yml"
-        credential: "Windows Credentials"
+        credential: "{{ credentials }}"
         limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
@@ -49,10 +58,10 @@
       tower_job_template:
         name: "Add server to domain"
         job_type: "check"
-        inventory: "Physical Inventory"
+        inventory: "{{ inventory }}"
         project: "Windows Admin Tasks"
         playbook: "add_server_to_domain.yml"
-        credential: "Windows Credentials"
+        credential: "{{ credentials }}"
         limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
@@ -61,10 +70,10 @@
       tower_job_template:
         name: "IIS Basic Install"
         job_type: "check"
-        inventory: "Physical Inventory"
+        inventory: "{{ inventory }}"
         project: "Windows Admin Tasks"
         playbook: "iis_basic.yml"
-        credential: "Windows Credentials"
+        credential: "{{ credentials }}"
         limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
@@ -75,10 +84,10 @@
       tower_job_template:
         name: "Install .NET 3.5"
         job_type: "check"
-        inventory: "Physical Inventory"
+        inventory: "{{ inventory }}"
         project: "Windows Admin Tasks"
         playbook: "install_dot_net.yml"
-        credential: "Windows Credentials"
+        credential: "{{ credentials }}"
         limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
@@ -87,10 +96,10 @@
       tower_job_template:
         name: "Install OpenJDK w/ Chocolatey"
         job_type: "run"
-        inventory: "Physical Inventory"
+        inventory: "{{ inventory }}"
         project: "Windows Admin Tasks"
         playbook: "install_openjdk.yml"
-        credential: "Windows Credentials"
+        credential: "{{ credentials }}"
         limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
@@ -99,10 +108,10 @@
       tower_job_template:
         name: "Install NodeJS w/ MSI"
         job_type: "run"
-        inventory: "Physical Inventory"
+        inventory: "{{ inventory }}"
         project: "Windows Admin Tasks"
         playbook: "install_nodejs_msi.yml"
-        credential: "Windows Credentials"
+        credential: "{{ credentials }}"
         limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
