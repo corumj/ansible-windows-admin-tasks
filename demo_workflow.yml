@@ -1,0 +1,7 @@
+- job_template: "Windows Updates"
+  success_nodes:
+  - job_template: "Add server to domain"
+    success_nodes:
+    - job_template: "IIS Basic Install"
+      success_nodes:
+      - job_template: "Install .NET 3.5"
