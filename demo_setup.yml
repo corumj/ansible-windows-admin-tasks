@@ -3,15 +3,15 @@
   hosts: localhost
   vars:
     # This section should be uncommented if using LTO Field Test Drive
-    credentials: "Windows Credentials" # Windows Credentials for LTO, Workshop Credential otherwise
-    inventory: "Physical Inventory" # Physical Inventory if LTO, Workshop Inventory otherwise
-    organization: Demo # Demo if LTO, Default if Workshop
-    limit_host_group: windows-servers # windows-servers if LTO, windows if workshop
+    # credentials: "Windows Credentials" # Windows Credentials for LTO, Workshop Credential otherwise
+    # inventory: "Physical Inventory" # Physical Inventory if LTO, Workshop Inventory otherwise
+    # organization: Demo # Demo if LTO, Default if Workshop
+    # limit_host_group: windows-servers # windows-servers if LTO, windows if workshop
     # This section should be uncommented if using the Windows Workshop
-    # credentials: "Workshop Credential"
-    # inventory: "Workshop Inventory"
-    # organization: Default
-    # limit_host_group: windows
+    credentials: "Workshop Credential"
+    inventory: "Workshop Inventory"
+    organization: Default
+    limit_host_group: windows
   tasks:
     - name: Add tower project
       tower_project:
@@ -29,16 +29,16 @@
       pause:
         seconds: 20
 
-    # - name: Create server provisioning job template
-    #   tower_job_template:
-    #     name: "Provision Server"
-    #     job_type: "check"
-    #     inventory: "{{ inventory }}"
-    #     project: "Windows Admin Tasks"
-    #     playbook: "provision_vmware_host.yml"
-    #     credential: "SSH Server Credentials"
-    #     state: "present"
-    #     tower_config_file: "~/.tower_cli.cfg"
+    - name: Create server provisioning job template
+      tower_job_template:
+        name: "Provision Server"
+        job_type: "check"
+        inventory: "{{ inventory }}"
+        project: "Windows Admin Tasks"
+        playbook: "provision_vmware_host.yml"
+        credential: "{{ credentials }}"
+        state: "present"
+        tower_config_file: "~/.tower_cli.cfg"
 
     - name: Create Windows Update job template
       tower_job_template:
@@ -115,3 +115,10 @@
         limit: "{{ limit_host_group }}"
         state: "present"
         tower_config_file: "~/.tower_cli.cfg"
+
+    - name: Create the Demo Workflow
+      tower_workflow_template:
+        name: Windows Demo Workflow
+        description: Demo Workflow Template
+        organization: "{{ organization }}"
+        schema: "{{ lookup('file', 'demo_workflow.yml') }}"
