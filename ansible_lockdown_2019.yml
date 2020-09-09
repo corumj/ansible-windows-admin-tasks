@@ -1,0 +1,8 @@
+--- 
+- name: Lockdown Windows Server 2019
+  hosts: all
+  roles:
+    - role: win-2k19-stig
+      when:
+        - ansible_os_family == 'Windows'
+        - ansible_distribution | regex_search('Server 2019')
