@@ -1,6 +1,6 @@
 ---
 - name: Setup demo env
-  hosts: localhost
+  hosts: all
   gather_facts: no
   vars:
     # This section should be uncommented if using LTO Field Test Drive
