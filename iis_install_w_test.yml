@@ -28,7 +28,7 @@
       - name: check content
         assert: 
           that:
-            - response.content == "Hello, world!"
+            - response.content == {{ iis_test_message }}
 
       - name: Show website address
         debug:
