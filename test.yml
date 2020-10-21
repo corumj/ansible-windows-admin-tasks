@@ -7,7 +7,7 @@
   tasks:
     - name: Check for 200 response from IIS 
       ansible.builtin.uri:
-        url: "http://{{ ansible_all_ipv4_addresses[0] }}"
+        url: "http://{{ hostvars[inventory_hostname]['ansible_all_ipv4_addresses'] }}"
       register: response 
 
     - name: check content
