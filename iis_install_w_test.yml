@@ -25,7 +25,7 @@
           return_content: yes
         register: response 
         delegate_to: localhost
-        failed_when: "{{ iis_test_message }} not in response.content"
+        failed_when: iis_test_message not in response.content
 
       - name: Show website address
         debug:
