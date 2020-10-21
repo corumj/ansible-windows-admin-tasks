@@ -19,7 +19,7 @@
           content: "{{ iis_test_message }}"
           dest: C:\Inetpub\wwwroot\index.html
   
-      - name: Check for 200 response from IIS 
+      - name: Check for 200 response from IIS and that content is as expected
         ansible.builtin.uri:
           url: "http://{{ hostvars[inventory_hostname]['ansible_ip_addresses'][0] }}"
           return_content: yes
