@@ -4,11 +4,10 @@
   gather_facts: yes
   vars:
     iis_test_message: "Hello, world!"
-    iis_url: "http://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
   tasks:
     - name: Check for 200 response from IIS 
       ansible.builtin.uri:
-        url: "{{ iis_url }}"
+        url: "http://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
       register: response 
 
     - name: check content
