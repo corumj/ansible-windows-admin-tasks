@@ -5,9 +5,6 @@
   vars:
     iis_test_message: "Hello, world!"
   tasks:
-    # - name: print hostvars
-    #   debug:
-    #     var: hostvars[inventory_hostname]
 
     - name: Check for 200 response from IIS 
       ansible.builtin.uri:
@@ -15,7 +12,6 @@
       register: response 
       delegate_to: localhost
       
-
     - name: check content
       assert: 
         that:
