@@ -1,9 +1,10 @@
 ---
 - name: Test that server is configured as expected
   hosts: all
+  gather_facts: yes
   vars:
     iis_test_message: "Hello, world!"
-    iis_url: "http://{{ ansible_default_ipv4.address }}"
+    iis_url: "http://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
   tasks:
     - name: Check for 200 response from IIS 
       ansible.builtin.uri:
