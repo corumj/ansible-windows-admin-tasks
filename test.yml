@@ -1,0 +1,16 @@
+---
+- name: Test that server is configured as expected
+  hosts: all
+  vars:
+    iis_test_message: "Hello, world!"
+    iis_url: ""
+  tasks:
+    - name: Check for 200 response from IIS 
+      ansible.builtin.uri:
+        url: "{{ iis_url }}"
+      register: response 
+
+    - name: check content
+      assert: 
+        that:
+          - response.content == "Hello, world!"
