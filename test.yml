@@ -5,15 +5,10 @@
   vars:
     iis_test_message: "Hello, world!"
   tasks:
-
-    - name: Check for 200 response from IIS 
+    - name: Check for 200 response from IIS and that content is as expected
       ansible.builtin.uri:
         url: "http://{{ hostvars[inventory_hostname]['ansible_ip_addresses'][0] }}"
+        return_content: yes
       register: response 
       delegate_to: localhost
-      
-    - name: check content
-      assert: 
-        that:
-          - response.content == "Hello, world!"
-      ignore_errors: yes
+      failed_when: iis_test_message not in response.content
