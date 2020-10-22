@@ -15,6 +15,6 @@
           state: absent
   
       - name: remove index.html file
-        file:
+        win_file:
           path: C:\Inetpub\wwwroot\index.html
           state: absent
