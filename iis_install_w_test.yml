@@ -2,7 +2,7 @@
   - name: test and install IIS 
     hosts: all
     vars:
-      iis_test_message: "Hello, World!"
+      iis_test_message: "Hello, world!"
     tasks:
       - name: install iis
         win_feature:
