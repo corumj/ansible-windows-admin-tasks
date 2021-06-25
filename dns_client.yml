@@ -7,7 +7,7 @@
     - name: Set DNS servers for all adapters 
       win_dns_client:
         adapter_names: '*'
-        dns_servers:
+        ipv4_addresses:
           - 8.8.8.8
           - 8.8.4.4
         log_path: C:\dns_log.txt
