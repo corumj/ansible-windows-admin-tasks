@@ -1,6 +1,7 @@
 - name: Configure DNS on servers 
   hosts: all 
-  collection: ansible.windows 
+  collections: 
+    - ansible.windows 
 
   tasks:
     - name: Set DNS servers for all adapters 
