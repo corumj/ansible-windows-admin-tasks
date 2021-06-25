@@ -1,0 +1,10 @@
+- name: Gather Ethernet stats 
+  hosts: all 
+  tasks:
+    - name: Run netstat and return Ethernet stats 
+      win_command: netstat -e 
+      register: netstat 
+    
+    - name: Print stats 
+      debug: 
+        var: netstat
