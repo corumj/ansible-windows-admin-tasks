@@ -1,0 +1,12 @@
+- name: Configure DNS on servers 
+  hosts: all 
+  collection: ansible.windows 
+
+  tasks:
+    - name: Set DNS servers for all adapters 
+      win_dns_client:
+        adapter_names: '*'
+        dns_servers:
+          - 8.8.8.8
+          - 8.8.4.4
+        log_path: C:\dns_log.txt
