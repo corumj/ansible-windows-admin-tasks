@@ -1,0 +1,9 @@
+---
+- name: Deploy demo front end
+  host: tag_demo_frontend 
+  
+  tasks:
+    - name: Copy front end to IIS server 
+      win_template:
+        src: stackdemo.html.j2
+        dest: C:\Inetpub\wwwroot\index.html
