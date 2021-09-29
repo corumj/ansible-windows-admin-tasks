@@ -5,6 +5,10 @@
     - ansible.windows 
     - chocolatey.chocolatey
 
+  vars:
+    protocol: http
+    port: 8081
+    hostname: {{ hostvars[groups['tag_app_frontend'][0]]['ansible_host'] }}
   tasks:
     - name: ensure git is installed
       win_chocolatey:
