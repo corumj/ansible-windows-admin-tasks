@@ -46,8 +46,8 @@
     - name: Copy app to IIS directory 
       win_copy:
         remote_src: yes 
-        src: "{{ temp_dir.path }}"
-        dest: C:\Inetpub\wwwroot\
+        src: "{{ temp_dir.path }}/"
+        dest: C:\Inetpub\wwwroot
 
 
       
