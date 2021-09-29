@@ -1,9 +1,47 @@
 ---
 - name: Deploy demo front end
   hosts: tag_demo_frontend 
-  
+  collections:
+    - ansible.windows 
+    - chocolatey.chocolatey
+
   tasks:
-    - name: Copy front end to IIS server 
+    - name: ensure git is installed
+      win_chocolatey:
+        name: git
+        state: present
+      
+    - name: create temp folder to checkout repo 
+      win_tempfile:
+        state: directory
+        suffix: build 
+      register: temp_dir
+
+    - name: checkout front end repo  
+      git:
+        repo: https://github.com/corumj/simple-address-book
+        dest: "{{ temp_dir.path }}"
+
+    - name: Remove unneccessary files 
+      win_file:
+        path: "{{ temp_dir.path }}\\{{ item }}"
+        state: absent 
+      loop:
+        - Containerfile
+        - LICENSE
+        - README.md 
+        - entrypoint.sh 
+
+    - name: overwrite config with template 
       win_template:
-        src: stackdemo.html.j2
-        dest: C:\Inetpub\wwwroot\index.html
+        src: sab_config.json.j2 
+        dest: "{{ temp_dir.path }}\\config.default.json"
+
+    - name: Copy app to IIS directory 
+      win_copy:
+        remote_src: yes 
+        src: "{{ temp_dir.path }}"
+        dest: C:\Inetpub\wwwroot\
+
+
+      
