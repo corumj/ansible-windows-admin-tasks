@@ -1,6 +1,6 @@
 ---
 - name: Deploy demo front end
-  hosts: tag_demo_frontend 
+  hosts: tag_app_frontend 
   collections:
     - ansible.windows 
     - chocolatey.chocolatey
