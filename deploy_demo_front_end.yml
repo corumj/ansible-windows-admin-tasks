@@ -17,10 +17,12 @@
         suffix: build 
       register: temp_dir
 
-    - name: checkout front end repo  
-      git:
-        repo: https://github.com/corumj/simple-address-book
-        dest: "{{ temp_dir.path }}"
+    # - name: checkout front end repo  
+    #   git:
+    #     repo: https://github.com/corumj/simple-address-book
+    #     dest: "{{ temp_dir.path }}"
+    - name: checkout front end repo 
+      win_shell: git clone https://github.com/corumj/simple-address-book {{ temp_dir.path }}
 
     - name: Remove unneccessary files 
       win_file:
