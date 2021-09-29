@@ -8,7 +8,7 @@
   vars:
     protocol: http
     port: 8081
-    backend_hostname: "{{ hostvars[groups['tag_app_frontend'][0]]['public_dns_name'] }}"
+    backend_hostname: "{{ hostvars[groups['tag_app_backend'][0]]['public_dns_name'] }}"
   tasks:
     - name: ensure git is installed
       win_chocolatey:
