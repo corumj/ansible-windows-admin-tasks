@@ -39,7 +39,7 @@
         - entrypoint.sh 
 
     - name: overwrite config with template 
-      win_template:
+      community.windows.win_template:
         src: sab_config.json.j2 
         dest: "{{ temp_dir.path }}\\config.default.json"
 
