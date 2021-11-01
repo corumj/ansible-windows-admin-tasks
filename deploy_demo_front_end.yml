@@ -1,9 +1,6 @@
 ---
 - name: Deploy demo front end
   hosts: tag_app_frontend 
-  collections:
-    - ansible.windows 
-    - chocolatey.chocolatey
 
   vars:
     protocol: http
@@ -16,7 +13,7 @@
         state: present
       
     - name: create temp folder to checkout repo 
-      win_tempfile:
+      ansible.windows.win_tempfile:
         state: directory
         suffix: build 
       register: temp_dir
@@ -26,10 +23,10 @@
     #     repo: https://github.com/corumj/simple-address-book
     #     dest: "{{ temp_dir.path }}"
     - name: checkout front end repo 
-      win_shell: git clone https://github.com/corumj/simple-address-book {{ temp_dir.path }}
+      ansible.windows.win_shell: git clone https://github.com/corumj/simple-address-book {{ temp_dir.path }}
 
     - name: Remove unneccessary files 
-      win_file:
+      ansible.windows.win_file:
         path: "{{ temp_dir.path }}\\{{ item }}"
         state: absent 
       loop:
@@ -39,12 +36,12 @@
         - entrypoint.sh 
 
     - name: overwrite config with template 
-      win_template:
+      ansible.windows.win_template:
         src: sab_config.json.j2 
         dest: "{{ temp_dir.path }}\\config.default.json"
 
     - name: Copy app to IIS directory 
-      win_copy:
+      ansible.windows.win_copy:
         remote_src: yes 
         src: "{{ temp_dir.path }}/"
         dest: C:\Inetpub\wwwroot
