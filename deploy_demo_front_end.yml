@@ -23,7 +23,9 @@
     #     repo: https://github.com/corumj/simple-address-book
     #     dest: "{{ temp_dir.path }}"
     - name: checkout front end repo 
-      ansible.windows.win_shell: git clone https://github.com/corumj/simple-address-book {{ temp_dir.path }}
+      ansible.builtin.git:
+        repo: 'https://github.com/corumj/simple-address-book'
+        dest: "{{ temp_dir.path }}"
 
     - name: Remove unneccessary files 
       ansible.windows.win_file:
