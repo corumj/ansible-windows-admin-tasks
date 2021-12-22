@@ -19,12 +19,8 @@
       register: temp_dir
 
     - name: checkout front end repo  
-      ansible.windows.win_command: > 
-        "git"
-        "--no-pager"
-        "clone"
-        "https://github.com/corumj/simple-address-book" 
-        "{{ temp_dir.path }}"
+      ansible.windows.win_shell: |
+        git --no-pager clone https://github.com/corumj/simple-address-book {{ temp_dir.path }}"
 
     # - name: checkout front end repo 
     #   ansible.builtin.git:
