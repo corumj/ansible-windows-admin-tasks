@@ -10,6 +10,8 @@
     - name: ensure git is installed
       chocolatey.chocolatey.win_chocolatey:
         name: git
+        params: 
+          - NoGuiHereIntegration
         state: present
       
     - name: create temp folder to checkout repo 
